@@ -11,7 +11,7 @@ import time
 import Message
 
 # Master Operator
-class Jarvis(object):    
+class Jarvis(object):
     # Jarvis Object Instantiation
     def __init__(self):
         # Jarvis instantiation password
@@ -31,27 +31,27 @@ class Jarvis(object):
         self.state = self.password()
         if not self.state:
             sys.exit()
-        self.wifi_thr.start()
-            
-        # while 1:
-        #     print "the current wifi_currnet is: " + str(self.wifi_current)
-        #     if self.wifi_current <= self.wifi_dict['Weak']:  # if connection is weak or better
-        #         print "Creating Interpret and Stream objects..."
-        #         # Create Interpret Object
-        #         self.oInterpret = Interpret.Interpret()
-        #         # Create Stream Object
-        #         self.oStream = Stream.Stream(self.oInterpret)
-        #         # Create Notifying Object
-        #         self.notifier = threading.Thread(target=self.notify, args=())
-        #         # Wifi Control on Interpret and Output
-        #         print "Task Completed."
-        #         break
-        #     elif self.wifi_current == self.wifi_dict['Very Weak']: # wait until weak or better
-        #         print 'Waiting for stronger ping status...'
-        #         time.sleep(1)
-        #     else:   # no wifi, then search
-        #         print 'Searching for wifi...'
-        #         time.sleep(1)
+        #self.wifi_thr.start()
+
+        #while 1:
+        #    print "the current wifi_currnet is: " + str(self.wifi_current)
+        #    if self.wifi_current <= self.wifi_dict['Weak']:  # if connection is weak or better
+        #        print "Creating Interpret and Stream objects..."
+        #        # Create Interpret Object
+        #        self.oInterpret = Interpret.Interpret()
+        #        # Create Stream Object
+        #        self.oStream = Stream.Stream(self.oInterpret)
+        #        # Create Notifying Object
+        #        self.notifier = threading.Thread(target=self.notify, args=())
+        #        # Wifi Control on Interpret and Output
+        #        print "Task Completed."
+        #        break
+        #    elif self.wifi_current == self.wifi_dict['Very Weak']: # wait until weak or better
+        #        print 'Waiting for stronger ping status...'
+        #        time.sleep(1)
+        #    else:   # no wifi, then search
+        #        print 'Searching for wifi...'
+        #        time.sleep(1)
 
 
         print "Creating Interpret and Stream objects..."
@@ -72,7 +72,7 @@ class Jarvis(object):
         self.oStream.initiate()
         self.notifier.start()
     def terminate(self):
-        self.wifi_thr.join()
+        #self.wifi_thr.join()
         self.oStream.terminate()
         self.notifier.join()
     def wifi(self, mean):
@@ -84,10 +84,10 @@ class Jarvis(object):
             return self.wifi_dict['Weak']
         else:
             return self.wifi_dict['Very Weak']
-   
+
     def ping(self):
         while 1:
-            avg = []       
+            avg = []
             for i in xrange(3):
                 try:
                     ping = subprocess.Popen(["ping.exe","www.google.com"], stdout = subprocess.PIPE)
@@ -119,21 +119,21 @@ class Jarvis(object):
                 print "Access Granted."
                 return True
         return False
-    
+
     def notify(self):   # add clearance lvl distinction
         while 1:
             if self.wifi_current != self.wifi_prev and self.wifi_current>=3:    # wifi status changed and is bad
                 msg = 'The ping status is %s.' %(self.wifi_dict.keys()[self.wifi_dict.values().index(self.wifi_current)])
-                notif = Message.Message(msg, self.clearance, 5)         
-                self.oStream.addRequest(notif)   
+                notif = Message.Message(msg, self.clearance, 5)
+                self.oStream.addRequest(notif)
                 self.wifi_prev = self.wifi_current
             time.sleep(5)
 
 
-        
-    
-        
-   
-        
-        
-        
+
+
+
+
+
+
+
